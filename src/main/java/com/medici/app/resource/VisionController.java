@@ -15,6 +15,7 @@ import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.cloud.vision.v1.FaceAnnotation;
 import com.google.cloud.vision.v1.Feature.Type;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.medici.app.entity.VisionMessage;
 
 /**
@@ -32,6 +33,9 @@ public class VisionController {
 
 	@Autowired
 	private CloudVisionTemplate cloudVisionTemplate;
+
+	@Autowired
+	private ImageAnnotatorClient imageAnnotatorClient;
 
 	@RequestMapping(value = "/faceDetection", method = RequestMethod.POST)
 	public List<FaceAnnotation> faces(@RequestBody VisionMessage message) {
