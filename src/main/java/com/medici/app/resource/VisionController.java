@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,11 +31,6 @@ import com.medici.app.utils.ByteUtils;
 public class VisionController {
 
 	protected Logger logger = Logger.getLogger(VisionController.class.getName());
-
-	@Autowired
-	private ResourceLoader resourceLoader;
-
-	private ImageAnnotatorClient imageAnnotatorClient;
 
 	@RequestMapping(value = "/faceDetection", method = RequestMethod.POST)
 	public List<AnnotateImageResponse> faces(@RequestBody VisionMessage message) {
