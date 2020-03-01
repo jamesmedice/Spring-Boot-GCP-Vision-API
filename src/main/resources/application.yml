@@ -4,6 +4,9 @@ management:
     security:
         enabled: false
 
+server:
+    port: ${PORT:9000}
+
 spring:
     application:
         name: app-vision
