@@ -6,4 +6,4 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:8-jre-alpine
 COPY --from=BUILD /app/target/*.jar  application.jar
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=dev", "/application.jar"]
+ENTRYPOINT ["java", "-jar", "/application.jar"]
