@@ -1,0 +1,13 @@
+spring:
+    cloud:
+        config:
+            namespace: default
+            enabled: true
+            fail-fast: false 
+            name: Cloud
+            profile: dev, cloud, mysql
+            label: master
+        gcp:
+            project-id: ${PROJECT_ID:qwiklabs-gcp-00-96ff96e16985}
+            credentials:
+                location: classpath:key.json    

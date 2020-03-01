@@ -1,9 +1,12 @@
 package com.medici.app.resource;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.Feature.Type;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.medici.app.entity.VisionMessage;
 import com.medici.app.utils.ByteUtils;
 
@@ -32,16 +36,19 @@ public class VisionController {
 	protected Logger logger = Logger.getLogger(VisionController.class.getName());
 
 	@RequestMapping(value = "/faceDetection", method = RequestMethod.POST)
-	public List<AnnotateImageResponse> faces(@RequestBody VisionMessage message) {
-		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+	public Collection<?> faces(@RequestBody VisionMessage message) {
+		try {
 
+			ImageAnnotatorClient vision = ImageAnnotatorClient.create();
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.FACE_DETECTION).build();
 
-			List<AnnotateImageRequest> requests = getRequests(img, feat);
+			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 
-			List<AnnotateImageResponse> responses = getResponses(vision, requests);
-			return responses;
+			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
+
+			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
+			return payload.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -49,16 +56,18 @@ public class VisionController {
 	}
 
 	@RequestMapping(value = "/landmarkDetection", method = RequestMethod.POST)
-	public List<AnnotateImageResponse> landmarks(@RequestBody VisionMessage message) {
+	public Collection<?> landmarks(@RequestBody VisionMessage message) {
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build();
 
-			List<AnnotateImageRequest> requests = getRequests(img, feat);
+			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 
-			List<AnnotateImageResponse> responses = getResponses(vision, requests);
-			return responses;
+			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
+			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
+
+			return payload.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -66,17 +75,19 @@ public class VisionController {
 	}
 
 	@RequestMapping(value = "/docDetection", method = RequestMethod.POST)
-	public List<AnnotateImageResponse> documents(@RequestBody VisionMessage message) {
+	public Collection<?> documents(@RequestBody VisionMessage message) {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build();
 
-			List<AnnotateImageRequest> requests = getRequests(img, feat);
+			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 
-			List<AnnotateImageResponse> responses = getResponses(vision, requests);
-			return responses;
+			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
+			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
+
+			return payload.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -84,17 +95,19 @@ public class VisionController {
 	}
 
 	@RequestMapping(value = "/labelDetection", method = RequestMethod.POST)
-	public List<AnnotateImageResponse> labels(@RequestBody VisionMessage message) {
+	public Collection<?> labels(@RequestBody VisionMessage message) {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
 
-			List<AnnotateImageRequest> requests = getRequests(img, feat);
+			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 
-			List<AnnotateImageResponse> responses = getResponses(vision, requests);
-			return responses;
+			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
+			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
+
+			return payload.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -102,17 +115,17 @@ public class VisionController {
 	}
 
 	@RequestMapping(value = "/text", method = RequestMethod.POST)
-	public List<AnnotateImageResponse> text(@RequestBody VisionMessage message) {
+	public Collection<?> text(@RequestBody VisionMessage message) {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
 
-			List<AnnotateImageRequest> requests = getRequests(img, feat);
+			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
+			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
 
-			List<AnnotateImageResponse> responses = getResponses(vision, requests);
-			return responses;
+			return payload.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -120,17 +133,19 @@ public class VisionController {
 
 	}
 
-	private List<AnnotateImageResponse> getResponses(ImageAnnotatorClient vision, List<AnnotateImageRequest> requests) {
-		BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+	private List<AnnotateImageResponse> getResponses(ImageAnnotatorClient vision, Feature feat, Image img) {
+
+		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+		BatchAnnotateImagesResponse response = vision.batchAnnotateImages(Arrays.asList(request));
 		List<AnnotateImageResponse> responses = response.getResponsesList();
 		return responses;
 	}
 
-	private List<AnnotateImageRequest> getRequests(Image img, Feature feat) {
-		List<AnnotateImageRequest> requests = new ArrayList<>();
-		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-		requests.add(request);
-		return requests;
+	private Map<FieldDescriptor, Object> convertResponseToPayload(List<AnnotateImageResponse> responses) {
+		Map<FieldDescriptor, Object> out = new HashMap<>();
+		responses.stream().forEach(r -> r.getWebDetection().getWebEntitiesList().stream().forEach(entity -> {
+			out.putAll(entity.getAllFields());
+		}));
+		return out;
 	}
-
 }
