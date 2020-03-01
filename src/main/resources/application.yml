@@ -11,3 +11,14 @@ server:
 spring:
     application:
         name: app-vision
+    cloud:
+        config:
+            namespace: default
+            enabled: true
+            fail-fast: false 
+            name: Cloud
+            label: master
+        gcp:
+            project-id: ${PROJECT_ID:qwiklabs-gcp-01-8e343ec0963b}
+            credentials:
+                location: classpath:key.json

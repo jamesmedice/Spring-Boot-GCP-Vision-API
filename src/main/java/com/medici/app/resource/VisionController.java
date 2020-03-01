@@ -33,8 +33,6 @@ public class VisionController {
 	@Autowired
 	private CloudVisionTemplate cloudVisionTemplate;
 
-	//
-
 	@RequestMapping(value = "/faceDetection", method = RequestMethod.POST)
 	public List<FaceAnnotation> faces(@RequestBody VisionMessage message) {
 		try {
