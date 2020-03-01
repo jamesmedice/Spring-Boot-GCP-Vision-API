@@ -18,7 +18,6 @@ import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.Feature.Type;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
-import com.google.protobuf.ByteString;
 import com.medici.app.entity.VisionMessage;
 import com.medici.app.utils.ByteUtils;
 
@@ -36,15 +35,12 @@ public class VisionController {
 	public List<AnnotateImageResponse> faces(@RequestBody VisionMessage message) {
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-			ByteString imgBytes = ByteUtils.getByteString(message);
-
-			Image img = Image.newBuilder().setContent(imgBytes).build();
+			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.FACE_DETECTION).build();
 
 			List<AnnotateImageRequest> requests = getRequests(img, feat);
 
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+			List<AnnotateImageResponse> responses = getResponses(vision, requests);
 			return responses;
 
 		} catch (IOException e) {
@@ -56,15 +52,12 @@ public class VisionController {
 	public List<AnnotateImageResponse> landmarks(@RequestBody VisionMessage message) {
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-			ByteString imgBytes = ByteUtils.getByteString(message);
-
-			Image img = Image.newBuilder().setContent(imgBytes).build();
+			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build();
 
 			List<AnnotateImageRequest> requests = getRequests(img, feat);
 
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+			List<AnnotateImageResponse> responses = getResponses(vision, requests);
 			return responses;
 
 		} catch (IOException e) {
@@ -77,15 +70,12 @@ public class VisionController {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-			ByteString imgBytes = ByteUtils.getByteString(message);
-
-			Image img = Image.newBuilder().setContent(imgBytes).build();
+			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build();
 
 			List<AnnotateImageRequest> requests = getRequests(img, feat);
 
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+			List<AnnotateImageResponse> responses = getResponses(vision, requests);
 			return responses;
 
 		} catch (IOException e) {
@@ -98,15 +88,12 @@ public class VisionController {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-			ByteString imgBytes = ByteUtils.getByteString(message);
-
-			Image img = Image.newBuilder().setContent(imgBytes).build();
+			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
 
 			List<AnnotateImageRequest> requests = getRequests(img, feat);
 
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+			List<AnnotateImageResponse> responses = getResponses(vision, requests);
 			return responses;
 
 		} catch (IOException e) {
@@ -119,21 +106,24 @@ public class VisionController {
 
 		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-			ByteString imgBytes = ByteUtils.getByteString(message);
-
-			Image img = Image.newBuilder().setContent(imgBytes).build();
+			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
 
 			List<AnnotateImageRequest> requests = getRequests(img, feat);
 
-			BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+			List<AnnotateImageResponse> responses = getResponses(vision, requests);
 			return responses;
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
 		}
 
+	}
+
+	private List<AnnotateImageResponse> getResponses(ImageAnnotatorClient vision, List<AnnotateImageRequest> requests) {
+		BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+		List<AnnotateImageResponse> responses = response.getResponsesList();
+		return responses;
 	}
 
 	private List<AnnotateImageRequest> getRequests(Image img, Feature feat) {
