@@ -76,7 +76,7 @@ public class VisionController {
 	}
 
 	@RequestMapping(value = "/text", method = RequestMethod.POST)
-	public VisionMessage translate(@RequestBody VisionMessage message) {
+	public VisionMessage text(@RequestBody VisionMessage message) {
 		try {
 			String text = this.cloudVisionTemplate.extractTextFromImage(this.resourceLoader.getResource(message.getImageUrl()));
 			message.setText(text);
