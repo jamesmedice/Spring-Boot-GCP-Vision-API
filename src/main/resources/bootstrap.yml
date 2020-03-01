@@ -5,9 +5,9 @@ spring:
             enabled: true
             fail-fast: false 
             name: Cloud
-            profile: dev, cloud, mysql
+            profile: dev, cloud
             label: master
         gcp:
-            project-id: ${PROJECT_ID:qwiklabs-gcp-00-96ff96e16985}
+            project-id: ${PROJECT_ID:qwiklabs-gcp-01-8e343ec0963b}
             credentials:
                 location: classpath:key.json    

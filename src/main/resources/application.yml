@@ -1,5 +1,5 @@
 #set up properties
-PROJECT_ID: qwiklabs-gcp-00-96ff96e16985
+PROJECT_ID: qwiklabs-gcp-01-8e343ec0963b
 
 management:
     security:
@@ -10,4 +10,4 @@ server:
 
 spring:
     application:
-        name: app-translator
+        name: app-vision
