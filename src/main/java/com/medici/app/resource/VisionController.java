@@ -43,10 +43,7 @@ public class VisionController {
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.FACE_DETECTION).build();
 
-			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-
 			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
 			return payload.values();
 
@@ -62,11 +59,8 @@ public class VisionController {
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build();
 
-			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
 			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-
 			return payload.values();
 
 		} catch (IOException e) {
@@ -82,11 +76,8 @@ public class VisionController {
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build();
 
-			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
 			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-
 			return payload.values();
 
 		} catch (IOException e) {
@@ -102,11 +93,8 @@ public class VisionController {
 			Image img = ByteUtils.getByteString(message);
 			Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
 
-			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
 			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-
 			return payload.values();
 
 		} catch (IOException e) {
@@ -124,7 +112,6 @@ public class VisionController {
 
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
 			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-
 			return payload.values();
 
 		} catch (IOException e) {
