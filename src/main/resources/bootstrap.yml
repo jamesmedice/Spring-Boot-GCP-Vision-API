@@ -8,6 +8,6 @@ spring:
             profile: dev, cloud, mysql
             label: master
         gcp:
-            project-id: ${PROJECT_ID:qwiklabs-gcp-01-67229a26b6ac}
+            project-id: ${PROJECT_ID:qwiklabs-gcp-01-745d6fb7769b}
             credentials:
                 location: classpath:key.json    
