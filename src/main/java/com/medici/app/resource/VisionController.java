@@ -44,41 +44,13 @@ public class VisionController {
 			Feature feat = Feature.newBuilder().setType(Type.FACE_DETECTION).build();
 
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-			return payload.values();
 
-		} catch (IOException e) {
-			return Collections.EMPTY_LIST;
-		}
-	}
+			Map<FieldDescriptor, Object> out = new HashMap<>();
+			responses.stream().forEach(r -> r.getFaceAnnotationsList().stream().forEach(entity -> {
+				out.putAll(entity.getAllFields());
+			}));
 
-	@RequestMapping(value = "/landmarkDetection", method = RequestMethod.POST)
-	public Collection<?> landmarks(@RequestBody VisionMessage message) {
-		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
-
-			Image img = ByteUtils.getByteString(message);
-			Feature feat = Feature.newBuilder().setType(Type.LANDMARK_DETECTION).build();
-
-			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-			return payload.values();
-
-		} catch (IOException e) {
-			return Collections.EMPTY_LIST;
-		}
-	}
-
-	@RequestMapping(value = "/docDetection", method = RequestMethod.POST)
-	public Collection<?> documents(@RequestBody VisionMessage message) {
-
-		try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
-
-			Image img = ByteUtils.getByteString(message);
-			Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build();
-
-			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-			return payload.values();
+			return out.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -94,8 +66,13 @@ public class VisionController {
 			Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
 
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-			return payload.values();
+
+			Map<FieldDescriptor, Object> out = new HashMap<>();
+			responses.stream().forEach(r -> r.getLabelAnnotationsList().stream().forEach(entity -> {
+				out.putAll(entity.getAllFields());
+			}));
+
+			return out.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -111,8 +88,13 @@ public class VisionController {
 			Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
 
 			List<AnnotateImageResponse> responses = getResponses(vision, feat, img);
-			Map<FieldDescriptor, Object> payload = convertResponseToPayload(responses);
-			return payload.values();
+
+			Map<FieldDescriptor, Object> out = new HashMap<>();
+			responses.stream().forEach(r -> r.getTextAnnotationsList().stream().forEach(entity -> {
+				out.putAll(entity.getAllFields());
+			}));
+
+			return out.values();
 
 		} catch (IOException e) {
 			return Collections.EMPTY_LIST;
@@ -128,11 +110,4 @@ public class VisionController {
 		return responses;
 	}
 
-	private Map<FieldDescriptor, Object> convertResponseToPayload(List<AnnotateImageResponse> responses) {
-		Map<FieldDescriptor, Object> out = new HashMap<>();
-		responses.stream().forEach(r -> r.getWebDetection().getWebEntitiesList().stream().forEach(entity -> {
-			out.putAll(entity.getAllFields());
-		}));
-		return out;
-	}
 }
