@@ -1,6 +1,12 @@
 {
-  "client_id": "764086051850-6qr4p6gpi6hn506pt8ejuq83di341hur.apps.googleusercontent.com",
-  "client_secret": "d-FL95Q19q7MQmFpd7hHD0Ty",
-  "refresh_token": "1//03fBQy_5v4PgdCgYIARAAGAMSNwF-L9Irog7-dTNnhgyZaZ1D6Ioa72Cqd48eBkBinfN4twPtu8w_6j7rYg9s7WTc1Me-bwQfxO0",
-  "type": "authorized_user"
+  "type": "service_account",
+  "project_id": "qwiklabs-gcp-47982db821b8e864",
+  "private_key_id": "e7adc02ec272ebb2ab881bfc668fe3a8799c5980",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCaTg2nEgIH4EGI\nCYK8UVVVSg/E6QpV/cfPD4DHvPooal1ZQYAfgesm5zpjhfHVPHcAoFJ/ffxYgqId\nhKPFMCK5jO1dAroglSDtZfSOB9ODcEw8F2s1+J6K3EjaGb3yR4fXIQ2Wo44Dkg95\nUB4DHNUvDKuP9Ucw+1crkGGCRfTHp4Yye0hxBv8ry2Ray5/1eOXs5q769gY6vMHr\nsYoIvZWN//MCJXxN2uiHUvZ0poHVTz9ndQFN5XIRqYFVRlZUt84lzv0FMWRkzpOJ\nlO7gmxOUlzB3dS8bhW3meHp8N1qQvSA3vq7vCzrfAZoA3xkfUzLPt1LzloO4K8hI\nmKBCHMXHAgMBAAECggEAN3in38/RexNbe5Qvs5NpoeemE5vTY2aAVie0nBmLtMvI\nEzZA4RLLfojRrMWSUp4SCd+YyMx50zfjH8l3NoQ/d4T6L92zG9OAqtdkO0sE9tOA\nFHo2yIhANptKdV2bs2WTp/rx752MiCwR9AKhR20uFmPvqSj8FtfEVpzo8PRFMyCv\naCoeBqftD7bHkPoUQswM2d+67zRfNxqLb0zibcBBmDa2TH4oHLyynjQZOVl5z8jl\nRzn4Pi4k49FqIOtU4dJryzK4HDzx+UcdvF2AFDhniMh4chfkhAGhIQ0flEWCNKGT\np5mm+ckk2mD1gLNJmqDBppJQhnGRgHkwog68u+94wQKBgQDKoYmPCrJJWCeZ+1m2\nZ7xsRvFhUEfBJ4+6JJOR9k6Cw7fyicfyg+mygV4qUt1uUkdlxovRQFrBxJEUIw4f\nZNzg4p3SebfphUegYUxbEBl6bjJfGz2F7IJvcHNnQt81nmlCDSt+ORxiz1iGPFbo\n7PGjCUN4LwY/O5jpmw1rp4JRYwKBgQDC8hyvkY5NbmpAruDcdiz2aTu/ufzINcDz\n2foMpSMxeGSHsZoTiWPf7xu/NSQN70/xyv3h0SUf5ONsY3KnRwzvjGaXIMKa4bBA\nOUk5eoe6sN5UEhClUQUyww5ekxWpZmvFCBgd++htGkoROpH8aTTVq/vRdVmtjyWX\nMEnvuov5TQKBgQCUK8l+GtFCRr82nxD8DCFBgCL0CRNfUAGOmT57xoOkpV+2cEAQ\nu5tBV8423r9i87GX37bP/eIfvRBljDjAhi3qGGxVw4HTtg0pXtzJ3hzzZO9akn3L\nl6XNvYn14XV9LOhFT4IVW8fBDWPrTOY0j0cm9BgtIx3LUVZAxIvsw+HMhwKBgQCA\n5d9Lwx1pW1mL/VWWz9i48Sndgpd+tfQoCHfKRqJ3glhOVINA6bYNCie5jOSTBipB\nAOxPlJ9McGZjc3oK2vLVrWrkAHhMOm/0dyxQghEewvWududkt6aNQuXMaMqI4Lzf\nYZO4t6ieAyT4MVb3o4SYx4fQnhw2oxDC393zUdBdfQKBgGXYNnlo1WKXyt7x/6p9\n907VHo33Z7KvnYTRY4f9jIkoC0LG/pLXQC30mXfG/wJQJT3aNsHubQyB3zE1cJ7j\nQbV2eUfiyi1fgcwxHSuWgO4lRMtprumkGjZXu6WqwXdKKsJw/lxBZysNpDN7V1Rb\nvi+PvyTfO4RO2BIQusqIRY0a\n-----END PRIVATE KEY-----\n",
+  "client_email": "vision@qwiklabs-gcp-47982db821b8e864.iam.gserviceaccount.com",
+  "client_id": "106191545861311994840",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vision%40qwiklabs-gcp-47982db821b8e864.iam.gserviceaccount.com"
 }
